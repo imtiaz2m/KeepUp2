@@ -243,6 +243,12 @@ class MenuActivity : AppCompatActivity() {
      *  It then calculates if the user is within the bounds or not and returns
      *  a boolean value.
      */
+
+
+
+
+
+
     private fun isPointInCircle(latCircle: Double, longCircle:Double, friendlat:Double, friendlong:Double): Boolean{
         Log.d("isPointInCircle", "Executed*******************")
         Log.d("isPointInCircle : Value Check", latCircle.toString()+" "+longCircle.toString()+" "+friendlat.toString()+" "+friendlong.toString())
@@ -251,12 +257,24 @@ class MenuActivity : AppCompatActivity() {
             return true
 
         if ((friendlat - latCircle) * (friendlat - latCircle) +
-            (friendlong - longCircle) * (friendlong - longCircle) <= 10 * 10)
+            (friendlong - longCircle) * (friendlong - longCircle) <= 0.0010 )
             return true
         else
             return false
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      *  This method is called within searchFriends method where it takes the
