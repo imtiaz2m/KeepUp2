@@ -94,12 +94,12 @@ class loginActivity : AppCompatActivity() {
 
                             dataSnapshot.children.forEach {
                                 id = it.child("id").getValue().toString()
-                                Log.d("GotID", "True**************************")
+                                Log.d("Id Found?", "True************")
                                 setGlobalSession(userEmail, id, userName)
                             }
                         }
                         else {
-                            Log.d("Found", "NOTHING******************************************************************")
+                            Log.d("ID Not Found", "SnapShotNull*********")
                             id = database?.push()?.key!!
                             var user: User = User(userName, userEmail, id.toString(), longitude, latitude, LocalDateTime.now())
                             database?.child(id.toString())?.setValue(user)

@@ -66,10 +66,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             openSettingsActivity()
         }
 
-        var button3 = findViewById(R.id.button3) as Button
 
-        button3.setOnClickListener {
-        }
 
         val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
 
@@ -408,11 +405,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         Log.d("SnapShotPrint", dataSnapshot.toString())
                         dataSnapshot.children.forEach {
                             var FriendId: String = it.child("friendId").getValue().toString()
-                            Log.d("equalFriendID", FriendId + " = " + intentFriendId)
+                            Log.d("FriendID isEqual intent:Check", FriendId + " = " + intentFriendId)
                             if (FriendId == intentFriendId) {
                                 Log.d("matchFriendID", "True")
                                 var snapFriendId: String = it.key.toString()
-                                Log.d("snapFirendId", snapFriendId)
+                                Log.d("FriendIDFromSnap", snapFriendId)
 //                                    var SnapFriendId = FriendDataBase?.push()?.key!!
                                 var NewFriend: Friends =
                                     Friends(
@@ -426,7 +423,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             }
 
                         }
-                        Log.d("withinIf", "**********************************************")
                     } else {
                         //Toast.makeText(this@MenuActivity, "User does not exist", Toast.LENGTH_LONG)
                     }//ToDo: Need to fix

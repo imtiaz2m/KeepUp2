@@ -39,7 +39,7 @@ class MyJobService : JobService() {
                     latitude = location?.latitude.toString()
                     longitude = location?.longitude.toString()
 
-                    Toast.makeText(this, "ObtainLocationJobService" + latitude.toString(), Toast.LENGTH_SHORT).show()
+                  //  Toast.makeText(this, "ObtainLocationJobService" + latitude.toString(), Toast.LENGTH_SHORT).show()
                     updateUser()
 
                 }
@@ -64,7 +64,7 @@ class MyJobService : JobService() {
         )
 
         database?.child(currentID.toString())?.setValue(user)
-        Toast.makeText(this, "User added in job service", Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, "User added in job service", Toast.LENGTH_LONG).show()
     }
 
 }

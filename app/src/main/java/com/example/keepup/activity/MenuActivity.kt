@@ -58,7 +58,7 @@ class MenuActivity : AppCompatActivity() {
         addUserButton.setOnClickListener()
         {
             addFriends()
-            Log.d("CrossPoint3", "CrossPoint3*******************")
+            Log.d("AddFriendsCheck", "Friends Added Successfully*******************")
         }
 
         var seeAllFriendsBtn = findViewById(R.id.seeAllFriends) as Button
@@ -86,10 +86,10 @@ class MenuActivity : AppCompatActivity() {
             intent.putExtra("geoFenceLatT", pointList[position].latitude.toString())
             intent.putExtra("geoFenceLongT", pointList[position].longitude.toString())
 
-            Log.d("puttingInContent", pointList[position].latitude.toString())
+            Log.d("FriendsList:Location", pointList[position].latitude.toString())
             startActivity(intent)
 
-            Log.d("PositionInList", position.toString())
+            Log.d("IntentSuccess: AfterFriendsListPassed", position.toString())
         }
 
 
@@ -122,12 +122,13 @@ class MenuActivity : AppCompatActivity() {
                                 var NewFriend: Friends = Friends(currentID.toString(), FriendId, "", "")
                                 FriendDataBase?.child(SnapFriendId.toString())?.setValue(NewFriend)
                                 searchFriends()
-                                Log.d("withinFor", "**********************************************")
+                                Log.d("Within addFriends Loop", "True****************")
                             }
-                            Log.d("withinIf", "**********************************************")
+                            Log.d("Within IF: AfterAddFriendsLoop", "True**************")
                         } else {
                             Toast.makeText(this@MenuActivity, "User does not exist", Toast.LENGTH_LONG)
-                        }//ToDo: Need to fix
+                            Log.d("Within IF: User Not Found", "True*****************************")
+                        }
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
@@ -165,7 +166,7 @@ class MenuActivity : AppCompatActivity() {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                     if (dataSnapshot.value != null) {
-                        Log.d("DataSnapshot", "Not null************")
+                        Log.d("DataSnapshot", "Not null******")
 
                         dataSnapshot.children.forEach {
 
@@ -181,15 +182,15 @@ class MenuActivity : AppCompatActivity() {
 
                                     fillFriendList(e,tempGeoLatT,tempGeoLongT)
                                     if (tempGeoLatT != "") {
-                                        Log.d("tempGeoLatT", tempGeoLatT)
+                                        Log.d("GeoCheck:tempGeoLatT", tempGeoLatT)
                                         pointList.add(LatLng(tempGeoLatT.toDouble(), tempGeoLongT.toDouble()))
                                     } else {
-                                        Log.d("ElsetempGeoLatT", tempGeoLatT)
+                                        Log.d("WithIn Else For GeoCheck", tempGeoLatT)
                                         pointList.add(LatLng(0.00, 0.00))
                                     }
                                 }
                             })
-                            Log.d("FriendId", FriendId)
+                            Log.d("FriendId Check:", FriendId)
                         }
                     }
                 }
@@ -198,8 +199,6 @@ class MenuActivity : AppCompatActivity() {
 //                    // handle error
                 }
             })
-
-        Log.d("searchFrOut", "in************")
 
     }
 
@@ -215,7 +214,7 @@ class MenuActivity : AppCompatActivity() {
         else
              resultStatus ="Not In Bounds"
 
-        Log.d("fillFrIn", "in************")
+        Log.d("FillFriendsListMethod", "Executing************")
         lateinit var listView: ListView
         listView = findViewById<ListView>(R.id.friendsList)
 
@@ -230,10 +229,10 @@ class MenuActivity : AppCompatActivity() {
             listItems.add(user.name + " (" + user.emailAddress + ")"+resultStatus)
         }
 
-        Log.d("CrossPoint", "CrossPoint*******************")
+        Log.d("ErrorPoint1", "BeforeAdapter*******************")
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
         listView.adapter = adapter
-        Log.d("CrossPoint2", "CrossPoint2*******************")
+        Log.d("ErrorPoint2", "AfterAdapter*******************")
     }
 
 
@@ -245,8 +244,8 @@ class MenuActivity : AppCompatActivity() {
      *  a boolean value.
      */
     private fun isPointInCircle(latCircle: Double, longCircle:Double, friendlat:Double, friendlong:Double): Boolean{
-        Log.d("CrossPoint99", "CrossPoint99*******************")
-        Log.d("CrossPoint99", latCircle.toString()+" "+longCircle.toString()+" "+friendlat.toString()+" "+friendlong.toString())
+        Log.d("isPointInCircle", "Executed*******************")
+        Log.d("isPointInCircle : Value Check", latCircle.toString()+" "+longCircle.toString()+" "+friendlat.toString()+" "+friendlong.toString())
 
         if(latCircle == 0.0)
             return true
