@@ -32,8 +32,10 @@ class loginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        database = FirebaseDatabase.getInstance().getReference("User")// This line of code gets the "User" node from the firebase database.
+        /**
+         *   This line of code gets the "User" node from the firebase database.
+         */
+        database = FirebaseDatabase.getInstance().getReference("User")
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         ObtainLocation()
 
@@ -50,8 +52,10 @@ class loginActivity : AppCompatActivity() {
         }
     }
 
-
-    @SuppressLint("MissingPermission") //This method runs when the activity is created. It gets the users current location.
+    /**
+     *  This method runs when the activity is created. It gets the users current location.
+     */
+    @SuppressLint("MissingPermission")
     private fun ObtainLocation() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
@@ -60,11 +64,24 @@ class loginActivity : AppCompatActivity() {
             }
     }
 
-    private fun addUser():Boolean { //This method is called when the user clicks on the login button. It either creates a new user in case of email address not found ot gets users data and creates a session.
+
+    /**
+    * This method is called when the user clicks on the login button.
+    * It either creates a new user in case of email address not found ot gets users data and creates a session.
+     **/
+    private fun addUser():Boolean {
         var userEmail = addUserEmail?.text.toString().trim()
         var userName = addUserName?.text.toString().trim()
         var id: String? = null
 
+        /**
+         *  The following code is used throughtout the application to query data
+         *  and get or set values in the database.
+         *  In the following case we are looking for the users email address
+         *  and checking if it exists in the databse or not.
+         *  If yes, we get the specific User object from the database.
+         *  And save it to our session parameters.
+         */
         if (!TextUtils.isEmpty(userEmail) && !TextUtils.isEmpty(userName)) {
             database.orderByChild("emailAddress")
                 .equalTo(userEmail)
@@ -102,7 +119,12 @@ class loginActivity : AppCompatActivity() {
         }
     }
 
-    private fun setGlobalSession(userEmail: String, id: String?, userName: String) { // This method creates a session for the user. It has username, email address and id that can be used anywhere else.
+
+    /**
+     *  This method is used to set the session variables stored. The session object
+     *  has the user data stores to be accessed at any time while the app is running.
+     */
+    private fun setGlobalSession(userEmail: String, id: String?, userName: String) {
         val settings = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         val editor = settings.edit()
         editor.putString("userEmail", userEmail)
@@ -111,7 +133,12 @@ class loginActivity : AppCompatActivity() {
         editor.commit()
     }
 
-    private fun openMapsActivity() {// This method creates an intent to open the MapsActivity. It is called after the user clicks login and addUser method runs successfully.
+
+    /**
+     *  This method creates an intent to open the MapsActivity.
+     *  It is called after the user clicks login and addUser method runs successfully.
+     */
+    private fun openMapsActivity() {
         val intent = Intent(this, MapsActivity::class.java)
         startActivity(intent)
     }

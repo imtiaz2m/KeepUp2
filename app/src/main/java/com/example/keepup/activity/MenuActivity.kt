@@ -30,9 +30,18 @@ class MenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu)
 
         var homeButton = findViewById(R.id.homeButton) as Button
+
+        /**
+         *  Accessing the user node in the database here.
+         */
         database = FirebaseDatabase.getInstance().getReference("User")
 
 
+        /**
+         *  This event is used to execute an intent within openMapsActivity
+         *  that opens the mapActivity and also passes some friend data
+         *  on to the mapsActivity depending on the users actions.
+         */
         homeButton.setOnClickListener {
             openMapsActivity()
         }
@@ -41,6 +50,11 @@ class MenuActivity : AppCompatActivity() {
         var addUserButton = findViewById(R.id.addUser) as Button
         searchFriends()
 
+
+        /**
+         *  This event is run when the user adds a new friend.
+         *  It calls the addUser method.
+         */
         addUserButton.setOnClickListener()
         {
             addFriends()
@@ -48,6 +62,10 @@ class MenuActivity : AppCompatActivity() {
         }
 
         var seeAllFriendsBtn = findViewById(R.id.seeAllFriends) as Button
+
+        /**
+         *  This method is executed when the user clicks on View All Friends On Map button.
+         */
         seeAllFriendsBtn.setOnClickListener()
         {
             getAllFriendsLocation()
@@ -56,6 +74,10 @@ class MenuActivity : AppCompatActivity() {
         var friendsList: ListView = findViewById<ListView>(R.id.friendsList)
         friendsList.setOnItemClickListener { parent, view, position, id ->
 
+            /**
+             *  Thw following code is taking friend data stored in a list and passing it within an
+             *  intent variable to the maps activity.
+             */
             val intent = Intent(this, MapsActivity::class.java)
             intent.putExtra("emailAddress", userList[position].emailAddress)
             intent.putExtra("longT", userList[position].longT)
@@ -73,6 +95,9 @@ class MenuActivity : AppCompatActivity() {
 
     }
 
+    /**
+     *  addFriends here is used to add friends to a users list.
+     */
     private fun addFriends() {
         var userEmail = addUserEmail?.text.toString().trim()
         var FriendDataBase: DatabaseReference =
@@ -112,12 +137,23 @@ class MenuActivity : AppCompatActivity() {
         }
     }
 
+
+    /**
+     *  This method starts an intent to open the maps activity.
+     */
     private fun openMapsActivity() {
         val intent = Intent(this, MapsActivity::class.java)
         startActivity(intent)
     }
 
 
+
+    /**
+     *  This method is executed first when the menu activity is loaded to
+     *  update the list of all friends for the user. It searches for all friends
+     *  within the databse for a user using the user id as key in the friends node
+     *  of the databse.
+     */
     private fun searchFriends() {
         val settings = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         var currentID: String? = settings.getString("id", null)
@@ -167,7 +203,10 @@ class MenuActivity : AppCompatActivity() {
 
     }
 
-
+    /**
+     *  This method is called after searchFriends to add the friends into
+     *  the list view under the add Friends button.
+     */
     private fun fillFriendList(user: User,latCircle: String, longCircle:String) {
         val result = isPointInCircle(latCircle.toDouble(),longCircle.toDouble(),user.latT.toDouble(),user.longT.toDouble());
         var resultStatus=" ";
@@ -197,12 +236,20 @@ class MenuActivity : AppCompatActivity() {
         Log.d("CrossPoint2", "CrossPoint2*******************")
     }
 
+
+    /**
+     *  This method checks if a certain location is within a certain area.
+     *  It uses a formula which is passed the longitude and latitude of
+     *  a person and the longitude and latitude of that person ge-fence.
+     *  It then calculates if the user is within the bounds or not and returns
+     *  a boolean value.
+     */
     private fun isPointInCircle(latCircle: Double, longCircle:Double, friendlat:Double, friendlong:Double): Boolean{
         Log.d("CrossPoint99", "CrossPoint99*******************")
         Log.d("CrossPoint99", latCircle.toString()+" "+longCircle.toString()+" "+friendlat.toString()+" "+friendlong.toString())
 
         if(latCircle == 0.0)
-            return true;
+            return true
 
         if ((friendlat - latCircle) * (friendlat - latCircle) +
             (friendlong - longCircle) * (friendlong - longCircle) <= 10 * 10)
@@ -212,7 +259,11 @@ class MenuActivity : AppCompatActivity() {
 
     }
 
-
+    /**
+     *  This method is called within searchFriends method where it takes the
+     *  FriendId from the database using the Users ID and gets the friends object.
+     *
+     */
     private fun getUser(friendId: String, geofenceLatT: String, geofenceLongT: String, myCallback: MyCallback) {
 
         database.orderByChild("id")
@@ -244,6 +295,13 @@ class MenuActivity : AppCompatActivity() {
 
     }
 
+
+    /**
+     *  This method creates a concatenated string of all friends (1 or more)
+     *  of a user and add them to an intent. The intent then opens the mapsActivity
+     *  and passes teh data to the required methods to display markers on those
+     *  friends location.
+     */
     private fun getAllFriendsLocation() {
         if (userList.isNotEmpty() && userList[0].emailAddress != "" && userList[0].emailAddress != null) {
             val intent = Intent(this, MapsActivity::class.java)

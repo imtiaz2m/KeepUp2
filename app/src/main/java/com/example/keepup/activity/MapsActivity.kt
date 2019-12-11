@@ -49,7 +49,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
         /**
-         *  This line points to the map fragment within the activity_maps xml and stores it as SupportMapFragment.
+         *  This line points to the map fragment within the activity_maps xml
+         *  and stores it as SupportMapFragment.
          */
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -58,7 +59,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         var menuButton = findViewById(R.id.menuButton) as Button
 
         /**
-         *  This method runs when the user clicks the Menu button. It calls openSettingsActivity that creates an intent to open the setting/friend list page.
+         *  This method runs when the user clicks the Menu button.
+         *  It calls openSettingsActivity that creates an intent to open the setting/friend list page.
          */
         menuButton.setOnClickListener {
             openSettingsActivity()
@@ -72,7 +74,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
 
         /**
-         *  The following method runs a background jobservice. This helps in getting new user location and sending it to the databse.
+         *  The following method runs a background jobservice.
+         *  This helps in getting new user location and sending it to the databse.
          */
         val jobInfo =
             JobInfo.Builder(11, ComponentName(this@MapsActivity, MyJobService::class.java))
@@ -149,7 +152,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-
+    /**
+     *  This method is called in the requestNewLocationData method and updates the
+     *  global variables of longT (longitude) and latT(latitude)
+     */
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             var mLastLocation: Location = locationResult.lastLocation
@@ -244,7 +250,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     /**
-     *  This method sends the 
+     *  All markers created for friends are stored within a globale list called markersArrayList.
+     *  This method  tries to focus the camera on the map into a central position
+     *  with respect to all markers so all markers are visible.
      */
     private fun getAllMarkersCamera(markers: ArrayList<Marker>): CameraUpdate {
         var builder: LatLngBounds.Builder =
@@ -260,7 +268,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         return camUpdate
     }
 
-
+    /**
+     *  This method is executed when the map framgemnt is loaded.
+     *  Since it is the only method that provides the GoogleMap object, this method
+     *  includes code to call methods such as getFriendsLocation to update
+     *  positions on the map.
+     */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -273,6 +286,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val intentgeoFenceLongT = intent.getStringExtra("geoFenceLongT")
 
 
+        /**
+         *  We pass the friend data using the intent that is passed from the menu activity.
+         *  It checks if the intent has any data regarding the friend, if yes,
+         *  it executes the getFriendLastLocation method.
+         */
         if (intentEmail == "" || intentEmail == null) {
             getLastLocation()
             Log.d("IntentIF", "In**********")
@@ -323,10 +341,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         }
 
+        /**
+         *  This method is executed when the user touches the screen of the map.
+         *  It creates new geo-fences at the position the user touches for
+         *  friends that are loaded at a current time.
+         */
         mMap.setOnMapClickListener(object : GoogleMap.OnMapClickListener {
             override fun onMapClick(point: LatLng) {
 
-                Toast.makeText(applicationContext, point.latitude.toString() + ", " + point.longitude.toString(), Toast.LENGTH_LONG).show()
+                //Toast.makeText(applicationContext, point.latitude.toString() + ", " + point.longitude.toString(), Toast.LENGTH_LONG).show()
                 drawCircle(point)
                 mMap.animateCamera(
                     CameraUpdateFactory.newLatLngZoom(
@@ -343,6 +366,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+    /**
+     *  This method creates the actual geo-fence object on the screen.
+     *  It does not create a goolge geo-fence object but instead uses the
+     *  circle object that is displayed on the map.
+     */
     private fun drawCircle(point: LatLng) {
         tempPoint = point
 
@@ -361,6 +389,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
+    /**
+     *  This method updates the geo-fence saved for a friend. If the user
+     *  clicks anywhere on the screen it takes those points og longitude and latitude and updates the information
+     *  for a friends geo-fence saved in the database.
+     */
     private fun updateFriendsGeoFence() {
         val settings = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         var currentID: String? = settings.getString("id", null)
