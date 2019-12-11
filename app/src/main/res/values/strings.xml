@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">KeepUp</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="menuButton">Menu</string>
+    <string name="getLocation">Get Location</string>
+    <string name="button3">*</string>
+    <string name="homeButton">Home</string>
+    <string name="title_activity_settings">menu</string>
+    <string name="enterEmail">Enter Email Address of user to add</string>
+    <string name="enterName">Enter user name</string>
+    <string name="addUser">Add User</string>
+    <string name="btnLogin">Login</string>
+    <string name="seeAllFriends">View All Friends on Map</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+</resources>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1044483840421",
+    "firebase_url": "https://keepup-7070d.firebaseio.com",
+    "project_id": "keepup-7070d",
+    "storage_bucket": "keepup-7070d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044483840421:android:cb8b04fa7a9f11948c304c",
+        "android_client_info": {
+          "package_name": "com.example.keepup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044483840421-mlgqvkm4078lv5fp1orkev0do3m0em28.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.keepup",
+            "certificate_hash": "e2355151f6f89c265a88bc053eb3a11581269a19"
+          }
+        },
+        {
+          "client_id": "1044483840421-17arhg5t0vj80m56hqie89t3bbo1id5j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOQOxjqsWRy5MCGcTKMhMmfeMj-BEx9Bs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044483840421-17arhg5t0vj80m56hqie89t3bbo1id5j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
