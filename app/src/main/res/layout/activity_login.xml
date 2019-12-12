@@ -29,7 +29,8 @@
         android:background="#BAF0ECEC"
         android:ems="10"
         android:hint="@string/enterEmail"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:typeface="sans"/>
 
 
     <EditText
@@ -41,7 +42,8 @@
         android:background="#BAF0ECEC"
         android:ems="10"
         android:hint="Enter user name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:typeface="sans"/>
 
     <Button
         android:id="@+id/addUser"

@@ -257,7 +257,7 @@ class MenuActivity : AppCompatActivity() {
             return true
 
         if ((friendlat - latCircle) * (friendlat - latCircle) +
-            (friendlong - longCircle) * (friendlong - longCircle) <= 0.0010 )
+            (friendlong - longCircle) * (friendlong - longCircle) <= 0.005 )
             return true
         else
             return false
