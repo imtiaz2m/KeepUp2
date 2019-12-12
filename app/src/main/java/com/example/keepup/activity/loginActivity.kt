@@ -67,7 +67,7 @@ class loginActivity : AppCompatActivity() {
 
     /**
     * This method is called when the user clicks on the login button.
-    * It either creates a new user in case of email address not found ot gets users data and creates a session.
+    * It either creates a new user in case of email address not found or gets users data and creates a session.
      **/
     private fun addUser():Boolean {
         var userEmail = addUserEmail?.text.toString().trim()
@@ -121,8 +121,10 @@ class loginActivity : AppCompatActivity() {
 
 
     /**
-     *  This method is used to set the session variables stored. The session object
-     *  has the user data stores to be accessed at any time while the app is running.
+     *  This method is used to set the session (please note this does not create real sessions
+     *  but uses SharedPreferences so the app can communicate key data between applications).
+     *  The SharedPreferences object has the user data stored to be accessed at any time while
+     *  the app is running.
      */
     private fun setGlobalSession(userEmail: String, id: String?, userName: String) {
         val settings = PreferenceManager.getDefaultSharedPreferences(applicationContext)

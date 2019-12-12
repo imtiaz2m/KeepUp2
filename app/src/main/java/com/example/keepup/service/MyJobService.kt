@@ -13,6 +13,12 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDateTime
 
+/**
+ * This class is used to define some methods such as ObtainLocation to run
+ * in the background using the JobService. It allows to get user location in the background.
+ **/
+
+
 class MyJobService : JobService() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -22,16 +28,24 @@ class MyJobService : JobService() {
     var database: DatabaseReference? = null
 
     override fun onStopJob(params: JobParameters?): Boolean {
-        return true//  TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return true
     }
 
+    /**
+     * Here we override the onStartJob method within JobService to get users location
+     * once the onStart event is passed. It uses ObtainLocation to get location.
+     **/
     override fun onStartJob(parameters: JobParameters?): Boolean {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         ObtainLocation()
         return true
     }
 
-
+    /**
+     * This method gets the user location and saves them to global variables latitude and longitude.
+     * It also calls updateUser to update user coordintes within the database so they can
+     * be accessed by other users.
+     **/
     @SuppressLint("MissingPermission")
     private fun ObtainLocation() {
         fusedLocationClient.lastLocation
@@ -45,6 +59,11 @@ class MyJobService : JobService() {
                 }
     }
 
+
+    /**
+     * This method is used to update user data in the database and is called when
+     * the ObtainLocation method gets new user location.
+     **/
     private fun updateUser() {
 
         database = FirebaseDatabase.getInstance().getReference("User")

@@ -208,7 +208,7 @@ class MenuActivity : AppCompatActivity() {
      */
     private fun fillFriendList(user: User,latCircle: String, longCircle:String) {
         val result = isPointInCircle(latCircle.toDouble(),longCircle.toDouble(),user.latT.toDouble(),user.longT.toDouble());
-        var resultStatus=" ";
+        var resultStatus=" "
         if(result == true && latCircle!="")
                 resultStatus="In Bounds"
         else
